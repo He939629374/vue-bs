@@ -1,16 +1,13 @@
 <template>
-  <!-- <div class="app-wrapper" >
-    <sidebar class="sidebar-container"></sidebar>
-    <div class="main-container">
-    </div>
-  </div> -->
-  <el-container>
-  <el-aside class="sidebar-container scroll-container"></el-aside>
+  <div class="app-wrapper" >
+    <!-- <sidebar class="sidebar-container"></sidebar> -->
+    <el-aside class="sidebar-container scroll-container"></el-aside>
     <div class="main-container">
       <!-- <navbar></navbar> -->
+      <!-- <tags-view></tags-view> -->
       <app-main></app-main>
     </div>
-</el-container>
+  </div>
 </template>
 
 <script>

@@ -295,7 +295,56 @@ async function getper() {
   
 }
 
+//更新权限表
+async function Upper(field) {	
+  let sql = "update login set permission='" + field.per +"' where ID ='" + field.ID + "'"
+  console.log(sql)
+  let dataList = await query( sql )
+  var d1=JSON.parse(dataList)
+  console.log('Getper:' + dataList )
+  return (d1)
+}
+async function upper(que) {
+	let dataList = await Upper(que)
+	return (dataList)
+  //var a = JSON.parse(dataList)
+  //console.log('result:'+dataList)
+}
+
+//查询权限表
+async function Selper(field) {	
+  let sql = "select * from login where 1=1"
+	if(field.ID){
+		sql =sql + ' and ID = "' +field.ID +  '" '
+		console.log(field.ID)
+	}
+	if(field.user_name){
+		sql =sql + ' and user_name = "' +field.user_name +  '" '
+		console.log(field.user_name)
+	}
+	if(field.permission){
+		sql =sql + ' and permission = "' +field.permission +  '" '
+		console.log(field.permission)
+	}	
+  console.log(sql)
+  let dataList = await query( sql )
+  var d1=JSON.parse(dataList)
+  console.log('Getper:' + dataList )
+  return (d1)
+}
+async function selper(que) {
+	let dataList = await Selper(que)
+	return (dataList)
+  //var a = JSON.parse(dataList)
+  //console.log('result:'+dataList)
+}
+//get
 router
+  .get('/selper',async (ctx,next) => {
+  console.log(ctx.query);
+  ctx.body =await selper(ctx.query) 
+  //console.log(ctx.body);
+  })
   .get('/getper',async (ctx,next) => {
   console.log(ctx.query);
   ctx.body =await getper() 
@@ -331,7 +380,13 @@ router
   ctx.body =await getdone(ctx.query) 
   //console.log(ctx.body);
   }) 
+
+//post
 router
+  .post('/upper',async (ctx,next) => {
+  console.log(ctx.request.body)
+  ctx.body = await upper(ctx.request.body)
+})
   .post('/uplist',async (ctx,next) => {
   console.log(ctx.request.body)
   ctx.body = await upList(ctx.request.body)

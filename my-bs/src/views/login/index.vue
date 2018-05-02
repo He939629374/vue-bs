@@ -64,29 +64,29 @@ export default {
     },
     handleLogin() {
       var self = this
-      // axios.get('http://localhost:3000/query?name=' + this.loginForm.username + '&password=' + this.loginForm.password, {
-      // })
-      //   .then(function(response) {
-      //     self.loading = true
-      //     console.log(response)
-      //     if (response.data == 200) {
-      //      // self.$store.dispatch('Login', self.loginForm).then(() => {
-      //         self.loading = false
-      //         self.$router.push({ path: '/' })
-      //         localStorage.username = self.loginForm.username
-      //         localStorage.password = self.loginForm.password
-      //       // }).catch(() => {
-      //       //   self.loading = false
-      //       // })
-      //     } else {
-      //       console.log('error submit!!')
-      //       alert('账号或密码错误')
-      //       self.loading = false
-      //       return false
-      //     }
-      //   })
-       axios.post('https://www.jianshu.com/asimov/trending/now?page=2&count=15', {
-       })
+      axios.get('http://localhost:3000/query?name=' + this.loginForm.username + '&password=' + this.loginForm.password, {
+      })
+        .then(function(response) {
+          self.loading = true
+          console.log(response)
+          if (response.data == 200) {
+           // self.$store.dispatch('Login', self.loginForm).then(() => {
+              self.loading = false
+              self.$router.push({ path: '/' })
+              localStorage.username = self.loginForm.username
+              localStorage.password = self.loginForm.password
+            // }).catch(() => {
+            //   self.loading = false
+            // })
+          } else {
+            console.log('error submit!!')
+            alert('账号或密码错误')
+            self.loading = false
+            return false
+          }
+        })
+      //  axios.post('https://www.jianshu.com/asimov/trending/now?page=2&count=15', {
+      //  })
          .then(function(response) {
            console.log(response.data)
          })
