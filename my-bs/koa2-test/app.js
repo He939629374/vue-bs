@@ -297,7 +297,10 @@ async function getper() {
 
 //更新权限表
 async function Upper(field) {	
-  let sql = "update login set permission='" + field.per +"' where ID ='" + field.ID + "'"
+  let sql = "update login set permission='" + 
+			field.permission + "',user_name='" + 
+			field.user_name + "',password='" + 
+			field.password + "' where ID ='" + field.ID + "'"
   console.log(sql)
   let dataList = await query( sql )
   var d1=JSON.parse(dataList)
@@ -337,6 +340,52 @@ async function selper(que) {
 	return (dataList)
   //var a = JSON.parse(dataList)
   //console.log('result:'+dataList)
+}
+
+//删除角色
+async function Delper(field) {	
+  let sql = "DELETE FROM login WHERE ID='" + field + "'" 
+  let sql2 = "select * FROM login" 
+  console.log(sql)
+  let dataList = await query( sql )
+  let dataList2 = await query( sql2 )
+  var d1=JSON.parse(dataList2)
+  console.log('Delper:' + dataList )
+  return (d1)
+}
+async function delper(que) {
+	let dataList = await Delper(que)
+	return (dataList)
+  //var a = JSON.parse(dataList)
+  //console.log('result:'+dataList)
+}
+
+//新增角色
+async function Addper(field) {
+ let sql0 = "select count(*) as count from login where user_name ='" + field.user_name + "'" 
+ let dataList0 = await query( sql0 )
+ var count = JSON.parse(dataList0)
+ console.log('dataList0:' + count[0].count )
+if(count[0].count>0){
+	
+	return 'exists'
+}else{
+  let sql = "INSERT INTO login (  user_name,password,permission) VALUES ('"  +
+  field.user_name + "','"+ field.password + "','" +field.permission + "' )"
+  let sql2 = "select * FROM login" 
+  console.log('sql:' + sql )
+  
+  let dataList = await query( sql )
+  let dataList2 = await query( sql2 )
+  console.log('Addper:' + dataList2 )
+  return dataList2
+}
+
+}
+async function addper(que) {
+  let dataList = await Addper(que)
+  //var a = JSON.parse(dataList)
+  return (dataList)
 }
 //get
 router
@@ -383,6 +432,14 @@ router
 
 //post
 router
+  .post('/addper',async (ctx,next) => {
+  console.log(ctx.request.body)
+  ctx.body = await addper(ctx.request.body)
+})
+  .post('/delper',async (ctx,next) => {
+  console.log(ctx.request.body.ID)
+  ctx.body = await delper(ctx.request.body.ID)
+})
   .post('/upper',async (ctx,next) => {
   console.log(ctx.request.body)
   ctx.body = await upper(ctx.request.body)
